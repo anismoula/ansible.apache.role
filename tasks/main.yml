@@ -1,0 +1,11 @@
+---
+
+- name: update the cache
+  apt:
+    update_cache=yes
+    cache_valid_time=3600
+
+- name: install apache packages
+  apt:
+    name={{apache_packages}}
+    state=present

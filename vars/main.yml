@@ -2,3 +2,17 @@
 apache_packages:
   - apache2
   - apache2-utils
+
+apache_vhosts:
+  vhost1:
+    server_name: example.org
+    server_admin: test@example.org
+    server_file_name: example.org
+    document_root: /var/www/example.org
+    directory_server_files: ./files/www
+  vhost2:
+    server_name: example.com
+    server_admin: test@example.com
+    server_file_name: example.com
+    document_root: /var/www/example.com
+    directory_server_files: ./files/www

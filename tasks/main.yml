@@ -1,11 +1,44 @@
 ---
 
-- name: update the cache
+- name: Update the cache
   apt:
     update_cache=yes
     cache_valid_time=3600
 
-- name: install apache packages
+- name: Install apache packages
   apt:
     name={{apache_packages}}
     state=present
+
+- name: Create document root directory
+  file:
+    path={{item.value.document_root}}
+    owner=root
+    group=root
+    mode=655
+    state=directory
+  with_dict: "{{ apache_vhosts }}"
+
+- name: Copy project files
+  copy:
+    src={{item.value.directory_server_files}}/
+    dest={{item.value.document_root}}
+    owner=root
+    group=root
+    mode=0655
+  with_dict: "{{ apache_vhosts }}"
+
+- name: Add vhosts
+  template:
+   src="vhosts.conf"
+   dest="/etc/apache2/sites-available/{{ item.value.server_file_name }}.conf"
+   owner=root
+   group=root
+   mode=644
+  with_dict: "{{ apache_vhosts }}"
+  notify: Restart apache
+
+- name: Enable Vhosts
+  command: a2ensite {{ item.value.server_name }}
+  with_dict: "{{ apache_vhosts }}"
+  notify: Restart apache

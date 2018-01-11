@@ -1,5 +1,7 @@
 # Apache Ansible Role
 
+[![Build Status](https://travis-ci.org/anismoula/ansible.apache.role.svg?branch=master)](https://travis-ci.org/anismoula/ansible.apache.role)
+
 Install Apache for Debian/Ubuntu Linux Servers
 
 ## Requirements
